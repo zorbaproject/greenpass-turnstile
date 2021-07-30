@@ -30,6 +30,7 @@ reader = r[0]
 
 
 def checkGP_text(gpText):
+  #Thanks to: https://github.com/panzi/verify-ehc
   #process = subprocess.Popen([os.path.abspath(os.path.dirname(sys.argv[0]))+'/verify-ehc/verify_ehc.py', "'gpText'"], stdout=subprocess.PIPE)
   #stdout = process.communicate()[0]
   #myoutput = stdout.decode('ascii')
@@ -60,6 +61,7 @@ def checkGP_text(gpText):
   return GPdata
 
 def getTSdata():
+  #Thanks to: https://www.mmxforge.net/index.php/sviluppo/python/item/9-lettura-dei-dati-della-tessera-sanitaria-con-python
   global reader
   connection = reader.createConnection()
   try:
@@ -240,6 +242,7 @@ def getQRfromCamera():
 
   # QR code detection object
   detector = cv2.QRCodeDetector()
+  print("Waiting for QR code")
 
   while True:
     # get the image
@@ -259,10 +262,15 @@ def getQRfromCamera():
     if len(data) > 0 and "NULL" not in data:
         break
 
-    # display the image preview
-    cv2.imshow("code detector", img)
-    if(cv2.waitKey(1) == ord("q")):
-        break
+    # display the image preview only if we have Xorg available
+    xorg = False
+    if 'DISPLAY' in os.environ:
+        if os.environ['DISPLAY'] != None and os.environ['DISPLAY'] != "":
+          xorg = True
+    if xorg:
+      cv2.imshow("code detector", img)
+      if(cv2.waitKey(1) == ord("q")):
+          break
     time.sleep(0.1)
   # free camera object and exit
   cap.release()
