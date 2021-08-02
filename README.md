@@ -9,5 +9,5 @@ Questa applicazione può girare su un RaspberryPi, con o senza schermo, e verifi
 Per il momento la verifica viene utilizzata solo la Tessera Sanitaria, perché ce l'hanno tutti i cittadini italiani (mentre la CIE o la firma digitale non sono così diffuse).
 
 ## TODO
-* Pubblicare su dev italia: https://developers.italia.it/it/riuso/pubblicazione
+* Pubblicare script per installazione su RaspberryOs
 * Supportare il passaporto elettronico come alternativa alla Tessera Sanitaria per i cittadini non italiani
