@@ -1,0 +1,85 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - identity-management
+  - visitor-management
+dependsOn:
+  hardware:
+    - name: Smartcard reader
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: ''
+    - name: Webcam or QR scanner
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: ''
+    - name: Embedded computer with GPIO pins support for Python
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: ''
+  open:
+    - name: Linux kernel
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: ''
+description:
+  it:
+    documentation: 'https://github.com/zorbaproject/greenpass-turnstile/blob/main/README.md'
+    features:
+      - Log degli accessi
+      - Verifica Green Pass
+      - Confronto Green Pass con Tessera Sanitaria
+    genericName: access-control
+    longDescription: |
+      Questo software implementa un sistema di controllo degli accessi a un
+      edificio, utilizzando una porta o un tornello attivati da relay. Il relay
+      viene attivato se l'utente fornisce un Green Pass e la sua Tessera
+      Sanitaria.
+
+
+      Prima di tutto viene verificata la validità del Green Pass, se questo è
+      valido i suoi dati anagrafici vengono confrontati con quelli della tessera
+      sanitaria. In questo modo si può essere certi che il Green Pass appartenga
+      proprio alla persona che lo sta presentando. Se non viene inserita una
+      tessera sanitaria, viene richiesto l'intervento di un operatore per
+      verificare che la persona corrisponda all'intestatario del Green Pass.
+    shortDescription: Controllo accessi in un edificio in base al Green Pass e Tessera Sanitaria
+developmentStatus: development
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+legal:
+  license: LGPL-3.0-or-later
+  mainCopyrightOwner: Luca Tringali
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+maintenance:
+  contacts:
+    - email: tringalinvent@libero.it
+      name: Luca Tringali
+  type: community
+name: Green Pass Turnstile
+platforms:
+  - linux
+releaseDate: '2021-08-01'
+softwareType: standalone/other
+url: 'https://github.com/zorbaproject/greenpass-turnstile'
+

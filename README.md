@@ -10,4 +10,7 @@ Per il momento la verifica viene utilizzata solo la Tessera Sanitaria, perché c
 
 ## TODO
 * Pubblicare script per installazione su RaspberryOs
+* Modalità di log degli accessi
+* Pubblicare codice per attivazione relay
+* Sviluppo GUI multilingue
 * Supportare il passaporto elettronico come alternativa alla Tessera Sanitaria per i cittadini non italiani
