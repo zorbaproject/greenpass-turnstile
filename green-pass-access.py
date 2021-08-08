@@ -251,6 +251,7 @@ def getTSdata():
 
 
 def isCertValid(GPdata,TSdata):
+    global config
     valid = True
     err = ""
     if GPdata["expired"]:
@@ -270,10 +271,11 @@ def isCertValid(GPdata,TSdata):
     else:
       valid = False
       err = "Certificato valido per "+str(GPdata["payload"]["nam"]["gn"])+ " "+GPdata["payload"]["nam"]["fn"]+" ma nessuna tessera sanitaria rilevata."
-      print(err+" Confermi che il certificato appartiene a questa persona?")
-      ch = input()
-      if "y" in ch.lower() or "s" in ch.lower():
-        valid = True
+      if config["interactive"]:
+        print(err+" Confermi che il certificato appartiene a questa persona?")
+        ch = input()
+        if "y" in ch.lower() or "s" in ch.lower():
+          valid = True
     return valid, err
 
 

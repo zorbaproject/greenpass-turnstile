@@ -1,3 +1,4 @@
 {
-	"log": true
+	"log": true,
+	"interactive": false
 }
