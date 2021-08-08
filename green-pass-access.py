@@ -12,22 +12,63 @@ from smartcard.System import readers
 #pip3 install opencv-contrib-python==4.1.0.25
 
 import cv2
-
 from PIL import Image
+
+import beepy as beep
+
 import subprocess
 import array
 import json
 import os
 import sys
 import time
+from datetime import datetime
 
-r = readers()
-if len(r) == 0:
-  print("No card reader found")
-  sys.exit()
-reader = r[0]
-#print("Sto usando: "+str(reader))
 
+relay = 17
+
+
+cfgfile = os.path.abspath(os.path.dirname(sys.argv[0]))+"/green-pass.json"
+logfile = os.path.abspath(os.path.dirname(sys.argv[0]))+"/green-pass.log"
+
+try:
+  import RPi.GPIO as GPIO
+  GPIO.setmode(GPIO.BCM)
+  GPIO.setup(relay, GPIO.OUT)
+  rpi = True
+except:
+  rpi = False
+
+config = {}
+
+reader = None
+try:
+  r = readers()
+  if len(r) == 0:
+      print("No card reader found")
+      sys.exit()
+  reader = r[0]
+  #print("Sto usando: "+str(reader))
+except:
+  print("Undefined error loading Smart Card Reader")
+  pass
+
+def getConfig():
+  global cfgfile
+  global config
+  text_file = open(cfgfile, "r")
+  mytext = text_file.read()
+  text_file.close()
+  config = json.loads(mytext)
+
+def open_door():
+    global relay
+    if rpi:
+        GPIO.output(relay, GPIO.LOW)
+        time.sleep(0.1)
+        GPIO.output(relay, GPIO.HIGH)
+        time.sleep(1)
+        GPIO.output(relay, GPIO.LOW)
 
 def checkGP_text(gpText):
   #Thanks to: https://github.com/panzi/verify-ehc
@@ -63,8 +104,8 @@ def checkGP_text(gpText):
 def getTSdata():
   #Thanks to: https://www.mmxforge.net/index.php/sviluppo/python/item/9-lettura-dei-dati-della-tessera-sanitaria-con-python
   global reader
-  connection = reader.createConnection()
   try:
+    connection = reader.createConnection()
     connection.connect()
   except:
     return {}
@@ -279,20 +320,44 @@ def getQRfromCamera():
   return data
 
 
-gpText = getQRfromCamera()
 
-print("QRcode:"+gpText)
+getConfig()
 
+active = True
 
-GPdata = checkGP_text(gpText)
-#print(GPdata)
+while active:
+    beep.beep(4)
+    gpText = getQRfromCamera()
 
-TSdata = getTSdata()
-#print(TSdata)
+    print("QRcode:"+gpText)
 
-val,err = isCertValid(GPdata,TSdata)
+    GPdata = checkGP_text(gpText)
+    #print(GPdata)
 
-if val:
-    print("OK: certificato valido e documento corrispondente per "+str(GPdata["payload"]["nam"]["gn"])+" "+str(GPdata["payload"]["nam"]["fn"])+", puoi entrare.")
-else:
-    print("ERRORE: "+err)
+    TSdata = getTSdata()
+    #print(TSdata)
+
+    val,err = isCertValid(GPdata,TSdata)
+
+    msg = ""
+    status = "ERROR"
+    if val:
+        msg = "OK: certificato valido e documento corrispondente per "+str(GPdata["payload"]["nam"]["gn"])+" "+str(GPdata["payload"]["nam"]["fn"])+", puoi entrare."
+        status = "OK"
+        beep.beep(5)
+        open_door()
+    else:
+        msg = "ERRORE: "+err
+        beep.beep(3)
+    print(msg)
+    
+    if config["log"]:
+        try:
+            cf = TSdata["CF"]
+        except:
+            cf = ""
+        
+        logline = str(datetime.now()) + "," + status + "," + str(cf) +"," + msg
+        with open(logfile, "a", encoding='utf-8') as myfile:
+            myfile.write(logline+"\n")
+    time.sleep(1)
