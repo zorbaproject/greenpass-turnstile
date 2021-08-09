@@ -280,6 +280,7 @@ def isCertValid(GPdata,TSdata):
 
 
 def getQRfromCamera():
+  global config
   # set up camera object
   cap = cv2.VideoCapture(0)
 
@@ -307,7 +308,7 @@ def getQRfromCamera():
 
     # display the image preview only if we have Xorg available
     xorg = False
-    if 'DISPLAY' in os.environ:
+    if 'DISPLAY' in os.environ and config["screen"]:
         if os.environ['DISPLAY'] != None and os.environ['DISPLAY'] != "":
           xorg = True
     if xorg:

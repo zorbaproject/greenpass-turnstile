@@ -31,5 +31,5 @@ Al momento sono disponibili due parametri di configurazione nel file json che si
 - [x] Pubblicare script per installazione su RaspberryOs
 - [x] Modalità di log degli accessi
 - [x] Pubblicare codice per attivazione relay
-- [] Sviluppo GUI multilingue
-- [] Supportare il passaporto elettronico come alternativa alla Tessera Sanitaria per i cittadini non italiani
+- [ ] Sviluppo GUI multilingue
+- [ ] Supportare il passaporto elettronico come alternativa alla Tessera Sanitaria per i cittadini non italiani
