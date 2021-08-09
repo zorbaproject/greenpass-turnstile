@@ -28,8 +28,8 @@ Al momento sono disponibili due parametri di configurazione nel file json che si
 * *interactive*: Se impostato a "true", nel caso in cui l'utente abbia un Green Pass valido ma non abbia presentato una Tessera Sanitaria viene chiesto a un operatore di confermare che l'identità della persona corrisponda al proprietario del Green Pass. Se impostato a "false", il software è completamente autonomo, quindi se non viene inserita una Tessera Sanitaria il Green Pass viene considerato non verificato e l'ingresso è negato.
 
 ## TODO
-[*] Pubblicare script per installazione su RaspberryOs
-[*] Modalità di log degli accessi
-[*] Pubblicare codice per attivazione relay
-[] Sviluppo GUI multilingue
-[] Supportare il passaporto elettronico come alternativa alla Tessera Sanitaria per i cittadini non italiani
+- [x] Pubblicare script per installazione su RaspberryOs
+- [x] Modalità di log degli accessi
+- [x] Pubblicare codice per attivazione relay
+- [] Sviluppo GUI multilingue
+- [] Supportare il passaporto elettronico come alternativa alla Tessera Sanitaria per i cittadini non italiani
